@@ -10,7 +10,26 @@
 </head>
 
 <body>
-    <h1>es ekl registro</h1>
+    <main>
+        <div class="form-container">
+            <h1>Crear cuenta</h1>
+            <p>crear tu cuenta para entrar al area de administrador</p>
+            <form id="register-form">
+                <label for="user" class="sr-only">User</label>
+                <input type="text" name="user" id="user" placeholder="Nombre de usario">
+
+                <label for="email" class="sr-only">Correo Electronico</label>
+                <input type="email" name="email" id="email" placeholder="Correo Electronico">
+
+                <label for="password" class="sr-only">Password</label>
+                <input type="password" name="password" id="password" placeholder="Contraseña">
+
+                <button type="submit">Iniciar sesion</button>
+                <p class="error escondido">Error al registrarse</p>
+            </form>
+            <p>estas registrado - <a href="/">Iniciar Sesion</a></p>
+        </div>
+    </main>
 </body>
 
 </html>
