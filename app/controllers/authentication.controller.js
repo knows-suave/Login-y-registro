@@ -1,12 +1,29 @@
 const bcryptjs = require('bcryptjs')
+const jsonwebtoken = require('jsonwebtoken')
+const dotenv = require('dotenv')
+
 
 const usuarios = [{
     user: "a",
     email: "a@a.com",
-    password: "a"
+    password: "$2a$05$VTHr7uBOMiINmAfEmsWuS.e56rRdFIb8rEQ4eySSvIAc7oNaGwKia"
 }]
 
 async function login(req, res) {
+    console.log(req.body)
+    const user = req.body.user
+    const password = req.body.password
+    //email
+    if (!user || !password) {
+        return res.status(400).send({ status: "Error", message: "Datos incompletos" })
+    }
+    const usuarioARevisar = usuarios.find(usuario => usuario.user === user)
+    if (!usuarioARevisar) {
+        return res.status(400).send({ status: "Error", message: "Error durante login" })
+    }
+    const loginCorrecto = await bcryptjs.compare(password, usuarioARevisar.password)
+    // console.log(loginCorrecto) //booleano
+
 }
 
 async function register(req, res) {
