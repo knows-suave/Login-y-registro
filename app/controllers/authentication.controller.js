@@ -1,7 +1,10 @@
 const bcryptjs = require('bcryptjs')
 const jsonwebtoken = require('jsonwebtoken')
-const dotenv = require('dotenv')
 
+// process.env.
+// const dotenv = require('dotenv')
+// dotenv.config()
+require(`dotenv`).config()
 
 const usuarios = [{
     user: "a",
@@ -24,6 +27,23 @@ async function login(req, res) {
     const loginCorrecto = await bcryptjs.compare(password, usuarioARevisar.password)
     // console.log(loginCorrecto) //booleano
 
+    if (!loginCorrecto) {
+        return res.status(400).send({ status: "Error", message: "Error durante login" })
+    }
+
+    const token = jsonwebtoken.sign(
+        { user: usuarioARevisar.user },
+        process.env.JWT_SECRET,
+        { expiresIn: process.env.JWT_EXPIRATION }
+    )
+
+    const cookieOption = {
+        expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES * 24 * 60 * 60 * 1000),
+        path: "/"
+    }
+    res.cookie("jwt", token, cookieOption)
+    // res.status(200)
+    res.send({ status: "ok", message: "Usuario loggeado", redirect: "./admin" })
 }
 
 async function register(req, res) {

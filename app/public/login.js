@@ -1,4 +1,4 @@
-const mensajeError = document.getElementsByName("error")[0]
+const mensajeError = document.getElementsByClassName("error")[0]
 
 document.getElementById("login-form").addEventListener("submit", async (e) => {
     e.preventDefault()
@@ -16,6 +16,6 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
     if (!res.ok) return mensajeError.classList.toggle("escondido", false)
     const resJson = await res.json()
     if (resJson.redirect) {
-        window.location.href = resJson.redirect
+        window.location.href = await resJson.redirect
     }
 })
